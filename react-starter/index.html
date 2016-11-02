@@ -1,0 +1,380 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="../revealjs/css/reveal.css">
+    <link rel="stylesheet" href="../revealjs/css/theme/staydan.css">
+    <link rel="stylesheet" href="../revealjs/lib/css/zenburn.css">
+
+    <meta name="description" content="An introduction about Basic ReactJS.">
+    <meta name="author" content="Zhu Mengdan">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-32456518-5', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown>
+          <!-- Start Page -->
+          <script type="text/template">
+            ## ReactJS Sharing
+            ``` html
+            <div id="root"></div>
+            ```
+            ``` js
+            import ReactDOM from 'react-dom';
+            ReactDOM.render(
+              <div>Hello!</div>,
+              document.getElementById('root')
+            );
+            ```
+            <br>
+            *Daniel Zhu / 2016 Nov. 3*
+
+            <div class="sns-bar">
+              [<img style="width: 24px;" src="../imgs/github.png">](http://www.github.com/danielzhu)
+            </div>
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ## Agenda
+
+            - What's React?
+            - Getting Started
+            - Developer Tools
+            - Tasks
+
+            <br>
+            <br>
+            #### Target
+
+            People who knows Javascript / HTML / CSS.
+
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            ## [React](https://facebook.github.io/react) is ...
+
+            A declarative, efficient, and flexible JavaScript library for building user interfaces.
+            <br>
+            <br>
+            <br>
+            ###  **Just Component**, has no **
+
+            ...controllers, ...directives, ...templates, ...global event listeners, ...models...
+          </script>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            **Concept**
+            - JS Basic Syntax & ES6
+            - JSX
+            - Components and Props
+            - State and Lifecycle
+            - Events
+            - Lists and Keys
+            - ...
+          </script>
+        </section>
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## ES6
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              #### Class
+              ``` js
+                // The ES6+ way
+                class Photo extends React.Component {
+                  handleDoubleTap(e) { … }
+                  render() { … }
+                }
+              ```
+
+              ``` js
+              // The ES6+ way
+              class EmbedModal extends React.Component {
+                constructor(props) {
+                  super(props);
+                  // Operations usually carried out in componentWillMount go here
+                }
+              }
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              #### Arrow functions
+              ``` js
+              class PostInfo extends React.Component {
+                constructor(props) {
+                  super(props);
+                  this.handleOptionsButtonClick = this.handleOptionsButtonClick.bind(this);
+                }
+                handleOptionsButtonClick(e) {
+                  this.setState({showOptionsModal: true});
+                }
+              }
+              ```
+
+              ``` js
+              class PostInfo extends React.Component {
+                handleOptionsButtonClick = (e) => {
+                  this.setState({showOptionsModal: true});
+                }
+              }
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              #### Dynamic property names & template strings
+              ``` js
+              let demo = inputName + 'Value';
+              let demoNew = `${inputName}Value`;
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              #### Destructuring & spread attributes
+              ``` js
+              class AutoloadingPostsGrid extends React.Component {
+                render() {
+                  let {
+                    className,
+                    ...others,  // contains all properties of this.props except for className
+                  } = this.props;
+
+                  return (
+                    <div className={className}>
+                      <PostsGrid {...others} />
+                    </div>
+                  );
+                }
+              }
+              ```
+            </script>
+          </section>
+        </section>
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## JSX
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ## examples
+              ``` js
+              // JSX Basic
+              const el = <h1>Hello, world!</h1>;
+
+              // JSX with attribute
+              const el = <div tabIndex="0"></div>;
+
+              // JSX with variable
+              const el = <img src={user.avatarUrl}></img>;
+
+              // JSX can contain children
+              const el = (
+              <div>
+                <h1>Hello!</h1>
+                <h2>Good to see you here.</h2>
+              </div>
+              );
+              ```
+              <br>
+              It's a syntax extension to JavaScript, recommended by React Team to use it to describe the UI.
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ## JSX Compiling
+
+              These two examples are identical:
+
+              ``` js
+              const element = (
+                <h1 className="greeting">
+                  Hello, world!
+                </h1>
+              );
+              ```
+              ``` js
+              const element = React.createElement(
+                'h1',
+                {className: 'greeting'},
+                'Hello, world!'
+              );
+              ```
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ## JSX Compiling
+
+              React.createElement() performs a few checks to help you write bug-free code but essentially it creates an object like this:
+
+              ``` js
+              const element = {
+                type: 'h1',
+                props: {
+                  className: 'greeting',
+                  children: 'Hello, world'
+                }
+              };
+              ```
+            </script>
+          </section>
+        </section>
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## Components
+            </script>
+          </section>
+          <section>
+            <img style="max-height: 480px;min-height: 200px;" src="./imgs/tweet.jpg">
+          </section>
+          <section>
+            <img style="max-height: 480px;min-height: 200px;" src="./imgs/tweet-marked.jpg">
+          </section>
+          <section>
+            <h3>File Structures</h3>
+            <img src="./imgs/file-structures.jpg">
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              #### App.jsx
+              ``` js
+              class TwitterApp extends Component {
+                constructor(props) {
+                  super(props);
+                  this.state = {
+                    box: {
+                      status: 'warn', text: ''
+                    },
+                    timeline: [{id: 0, text: 'Hello, TNC', createdAt: Date.now() - 10000}]
+                  };
+                }
+                handleChange(e) {
+                  this.setState({box: {status: this.state.box.text.length > 0 && this.state.box.text.length <= 140, text: e.target.value}});
+                }
+                handleTweetClicked() {...}
+                render() {
+                  return (
+                    <div className="twitter-app">
+                      <h2>Twitter Simple Box</h2>
+                      <TwitterTweetBox
+                        box={this.state.box}
+                        handleChange={this.handleChange.bind(this)}
+                        handleClick={this.handleTweetClicked.bind(this)} />
+                      <div className="separator" />
+                      <TwitterTimeline timeline={this.state.timeline} />
+                    </div>
+                  );
+                }
+              }
+              export default TwitterApp;
+              ```
+              [Source](https://github.com/DanielZhu/react-starter/blob/master/src/twitter/app.jsx)
+            </script>
+          </section>
+        </section>
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## Developer Tools
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              <img style="max-height: 480px;min-height: 200px;" src="./imgs/react-devtool.jpg">
+              ### React DevTool for Chrome
+            </script>
+          </section>
+        </section>
+        <section>
+          <section data-markdown>
+            <script type="text/template">
+              ## Tasks
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              ### Tictactoe
+              <img style="max-height: 480px;min-height: 200px;" src="./imgs/tictactoe.jpg">
+            </script>
+          </section>
+          <section data-markdown>
+            <script type="text/template">
+              #### Features
+
+              - Draw 3x3 canvas(Ideas of components)
+              - Show winner
+              - Highlight the three cells caused the win
+              - Support Regret
+              - Display the move in format "(x, y)" instead of "1"
+              - Support restart the game
+            </script>
+          </section>
+        </section>
+        <section data-markdown>
+          <script type="text/template">
+            # Thanks
+          </script>
+        </section>
+      </div>
+    </div>
+    <script src="../revealjs/lib/js/head.min.js"></script>
+    <script src="../revealjs/js/reveal.min.js"></script>
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || "linear", // default/cube/page/concave/zoom/linear/fade/none
+
+        dependencies: [
+          // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
+          // { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+
+          // Interpret Markdown in <section> elements
+          { src: '../revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '../revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+
+          // Syntax highlight for <code> elements
+          { src: '../revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+
+          // Zoom in and out with Alt+click
+          // { src: 'plugin/zoom-js/zoom.js', async: true },
+
+          // Speaker notes
+          // { src: 'plugin/notes/notes.js', async: true },
+
+          // MathJax
+          // { src: 'plugin/math/math.js', async: true }
+        ]
+      });
+    </script>
+  </body>
+</html>
