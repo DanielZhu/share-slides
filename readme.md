@@ -2,7 +2,7 @@
 
 Here's my slides for all the sharing.
 
-[Slides Demo](http://danielzhu.github.io/sharing-slideshow)
+[Slides Demo](http://danielzhu.github.io/sharing-slide)
 
 
 Copyright to @2016 [Staydan.com](http://staydan.com)

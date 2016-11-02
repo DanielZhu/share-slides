@@ -363,7 +363,7 @@
           { src: '../revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 
           // Syntax highlight for <code> elements
-          { src: '../revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+          { src: '../revealjs/plugin/highlight/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } }
 
           // Zoom in and out with Alt+click
           // { src: 'plugin/zoom-js/zoom.js', async: true },
